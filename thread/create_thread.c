@@ -12,6 +12,11 @@
  *
  *         Author:  ZCG, 
  *   Organization:  
+ *           Note: pthread 库不是 Linux 系统默认的库，连接时需要使用静态库 libpthread.a，
+ *                  所以在使用pthread_create()创建线程，以及调用 pthread_atfork()函数建
+ *                  立fork处理程序时，需要链接该库。
+ *                  解决方法：在编译中要加 -lpthread参数
+ *                  gcc -o create_thread creat_thread.c -lpthread
  *
  * =====================================================================================
  */
