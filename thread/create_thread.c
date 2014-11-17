@@ -28,19 +28,19 @@
 
 void *newthread(void *str)
 {
-    printf("*********New thread : \n");
+    printf("*********New thread : %s\n", (char *)str);
     return ((void *)0);
 }
 
 int main(void)
 {
     int err;
-    //char str[10] = "hello";
+    char str[10] = "hello";
     //pid_t pid;
     pthread_t tid;
 
     printf("Before create thread.\n");
-    err = pthread_create(&tid, NULL, newthread, NULL);
+    err = pthread_create(&tid, NULL, newthread, (void *)str);
     printf("After create thread.\n");
     if (err != 0)
         printf("Create thread failed!\n");
