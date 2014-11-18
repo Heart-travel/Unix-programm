@@ -26,22 +26,26 @@
 #include <unistd.h>
 #include <pthread.h>
 
-void *newthread(void *str)
+void *newthread(void *i)
 {
-    printf("*********New thread : %s\n", (char *)str);
+    int a = *(int *)i;
+    printf("*********New thread : i = %d\n", a);
     return ((void *)0);
 }
 
 int main(void)
 {
-    int err;
-    char str[10] = "hello";
+    int err, num = 8;
+    int *i;
+    //char str[10] = "hello";
     //pid_t pid;
     pthread_t tid;
 
+    i = &num;
     printf("Before create thread.\n");
-    err = pthread_create(&tid, NULL, newthread, (void *)str);
-    printf("After create thread.\n");
+    err = pthread_create(&tid, NULL, newthread, (void *)i);
+    printf("After create thread : i = %d.\n", *i);
+    (*i)++;
     if (err != 0)
         printf("Create thread failed!\n");
     sleep(1);
