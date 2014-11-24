@@ -17,6 +17,7 @@
  *                  立fork处理程序时，需要链接该库。
  *                  解决方法：在编译中要加 -lpthread参数
  *                  gcc -o create_thread creat_thread.c -lpthread
+
  *
  * =====================================================================================
  */
@@ -25,26 +26,21 @@
 #include <unistd.h>
 #include <pthread.h>
 
-void *newthread(void *i)
+void *newthread(void *arg)
 {
-    int a = *(int *)i;
-    printf("*********New thread : i = %d\n", a);
+    printf("New thread : \t\tpid = %u, tid = %u (0x%x).\n", getpid(), pthread_self(), pthread_self());
     return ((void *)0);
 }
 
 int main(void)
 {
-    int err, num = 8;
-    int *i;
-    //char str[10] = "hello";
-    //pid_t pid;
+    int err;
+    pid_t pid;
     pthread_t tid;
 
-    i = &num;
     printf("Before create thread.\n");
-    err = pthread_create(&tid, NULL, newthread, (void *)i);
-    printf("After create thread : i = %d.\n", *i);
-    (*i)++;
+    err = pthread_create(&tid, NULL, newthread, NULL);
+    printf("After create thread : \tpid = %u, tid = %u (0x%x).\n", getpid(), pthread_self(), pthread_self());
     if (err != 0)
         printf("Create thread failed!\n");
     sleep(1);
